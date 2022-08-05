@@ -1,4 +1,4 @@
 from .views import api
 
 def init_app(app):
-    app.register_blueprint(api, url_prefix='/api/v1')
+    app.register_blueprint(api)

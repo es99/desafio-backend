@@ -1,25 +1,36 @@
 import json
-from flask import Blueprint, jsonify, request, url_for
+from flask import Blueprint, jsonify, request
+from pydantic import BaseModel
+from flask_pydantic_spec import Response, Request
+from lista_tarefas.extensions.pydantic import spec
+from tinydb import TinyDB, Query
 
 api = Blueprint('api', __name__)
+database = TinyDB('database.json')
 
-lst = [
-    {'id': 0, 'tarefa': "Lavar os pratos"},
-    {'id': 1, 'tarefa': "Arrumar o quarto"},
-    {'id': 2, 'tarefa': "cozinhar"}
-]
+class Lista(BaseModel):
+    id: int
+    tarefa: str
+
+@api.route('/')
+def index():
+    return '<h1>Teste</h1>'
+
+@api.route('/lista')
+#@spec.validate(resp=Response(HTTP_200=Lista))
+def exibir_lista():
+    """Exibe a lista completa"""
+    return jsonify(database.all())
 
 
-@api.route('/lista/')
-def lista():
-    return jsonify(lst)
+@api.route('/lista', methods=['POST'])
+@spec.validate(body=Request(Lista), resp=Response(HTTP_200=Lista))
+def inserir_item_na_lista():
+    """Insere um item de tarefa na lista de tarefas."""
+    body = request.context.body.dict()
+    database.insert(body)
+    return body
 
 @api.route('/lista/<int:id>')
-def get_lista(id):
-    return jsonify(lst[id])
-
-@api.route('/lista/', methods=['POST'])
-def update_list():
-    record = json.loads(request.data)
-    lst.append(dict(id=len(lst), tarefa=record))
-    return jsonify(json.dumps(record)), 201
+def retorna_item_da_lista(id):
+    return jsonify(lista[id])
