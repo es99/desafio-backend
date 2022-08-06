@@ -1,6 +1,6 @@
 # Desafio Back-end
 
-## Objetivo: Criação de uma API Restfull que visa retornar dados de uma lista de tarefas, bem como inserir novas tarefas nesta lista.
+## Objetivo: Criação de uma API Restful que visa retornar dados de uma lista de tarefas, bem como inserir novas tarefas nesta lista.
 - Tecnologias/Linguagens utilizadas:
   - Python
   - Framework Flask
@@ -8,7 +8,7 @@
   - flask_pydantic_spec (criação da documentação e listagem de endpoints)
   - shell script
 
-## Como executar a aplicação - Contexto da Aplicação Restfull rodando em LOCALHOST
+## Como executar a aplicação - Contexto da Aplicação Restful rodando em LOCALHOST
 - Executar o comando no terminal:
   -  rodar o script iniciar.sh; será setada as variáveis de ambiente necessárias e iniciar o servidor FLASK (flask run)
      -  source ./iniciar.sh
